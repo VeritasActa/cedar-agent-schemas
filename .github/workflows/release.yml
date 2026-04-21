@@ -1,0 +1,83 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+
+# Future releases auto-publish when a tag is pushed. Configure once:
+#   Settings → Secrets and variables → Actions → New repository secret
+#     PYPI_API_TOKEN      (pypi-AgE...)
+#     CARGO_REGISTRY_TOKEN (cio...)
+#     NPM_TOKEN           (npm_...)
+# Then: git tag v0.2.0 && git push --tags
+# Each publish step is independent: one can fail without blocking the others.
+
+jobs:
+  npm-publish:
+    name: Publish @veritasacta/cedar-agent-schemas to npm
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: bindings/typescript
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Publish
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  pypi-publish:
+    name: Publish cedar-agent-schemas to PyPI
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: bindings/python
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install build
+        run: pip install build twine
+
+      - name: Build sdist + wheel
+        run: python -m build
+
+      - name: Publish to PyPI
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+        run: twine upload dist/*
+
+  crates-publish:
+    name: Publish cedar-agent-schemas to crates.io
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: bindings/rust
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Test
+        run: cargo test
+
+      - name: Publish
+        run: cargo publish --token "${{ secrets.CARGO_REGISTRY_TOKEN }}"
