@@ -1,0 +1,111 @@
+{
+  "Agent": {
+    "entityTypes": {
+      "Principal": {
+        "shape": {
+          "type": "Record",
+          "attributes": {
+            "agent_id": { "type": "String" },
+            "trust_score": { "type": "Decimal" },
+            "ring": { "type": "Long" },
+            "session_id": { "type": "String", "required": false }
+          }
+        }
+      },
+      "File": {
+        "shape": {
+          "type": "Record",
+          "attributes": {
+            "path": { "type": "String" },
+            "owner_uid": { "type": "Long", "required": false }
+          }
+        }
+      },
+      "Endpoint": {
+        "shape": {
+          "type": "Record",
+          "attributes": {
+            "host": { "type": "String" },
+            "port": { "type": "Long" },
+            "protocol": { "type": "String" }
+          }
+        }
+      },
+      "Tool": {
+        "shape": {
+          "type": "Record",
+          "attributes": {
+            "name": { "type": "String" },
+            "server": { "type": "String", "required": false }
+          }
+        }
+      },
+      "Executable": {
+        "shape": {
+          "type": "Record",
+          "attributes": {
+            "path": { "type": "String" },
+            "trusted": { "type": "Boolean", "required": false }
+          }
+        }
+      }
+    },
+    "actions": {
+      "exec": {
+        "appliesTo": {
+          "principalTypes": ["Principal"],
+          "resourceTypes": ["Executable"],
+          "context": {
+            "type": "Record",
+            "attributes": {
+              "command": { "type": "String" },
+              "argv": { "type": "Set", "element": { "type": "String" } },
+              "cwd": { "type": "String", "required": false },
+              "uid": { "type": "Long", "required": false }
+            }
+          }
+        }
+      },
+      "open": {
+        "appliesTo": {
+          "principalTypes": ["Principal"],
+          "resourceTypes": ["File"],
+          "context": {
+            "type": "Record",
+            "attributes": {
+              "mode": { "type": "String" },
+              "size_bytes": { "type": "Long", "required": false }
+            }
+          }
+        }
+      },
+      "connect": {
+        "appliesTo": {
+          "principalTypes": ["Principal"],
+          "resourceTypes": ["Endpoint"],
+          "context": {
+            "type": "Record",
+            "attributes": {
+              "tls": { "type": "Boolean" },
+              "method": { "type": "String", "required": false },
+              "url": { "type": "String", "required": false }
+            }
+          }
+        }
+      },
+      "request_tool": {
+        "appliesTo": {
+          "principalTypes": ["Principal"],
+          "resourceTypes": ["Tool"],
+          "context": {
+            "type": "Record",
+            "attributes": {
+              "args_hash": { "type": "String" },
+              "transport": { "type": "String", "required": false }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "name": "@veritasacta/cedar-agent-schemas",
+  "version": "0.1.0",
+  "description": "Canonical Cedar schema library for agent action verbs (exec, open, connect, request_tool). TypeScript helpers for constructing Cedar requests against the schema.",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VeritasActa/cedar-agent-schemas.git",
+    "directory": "bindings/typescript"
+  },
+  "homepage": "https://github.com/VeritasActa/cedar-agent-schemas",
+  "keywords": [
+    "cedar",
+    "cedar-policy",
+    "agent-governance",
+    "authorization",
+    "policy",
+    "owasp-agentic"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0"
+  }
+}
