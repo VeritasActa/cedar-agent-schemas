@@ -1,0 +1,35 @@
+[build-system]
+requires = ["hatchling>=1.21"]
+build-backend = "hatchling.build"
+
+[project]
+name = "cedar-agent-schemas"
+version = "0.1.0"
+description = "Canonical Cedar schema library for agent action verbs (exec, open, connect, request_tool). Python helpers for constructing Cedar requests."
+readme = "README.md"
+license = { text = "Apache-2.0" }
+authors = [
+  { name = "Tom Farley", email = "tommy@scopeblind.com" }
+]
+keywords = ["cedar", "cedar-policy", "agent-governance", "authorization", "policy", "owasp-agentic"]
+classifiers = [
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Security",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+]
+requires-python = ">=3.9"
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/VeritasActa/cedar-agent-schemas"
+Repository = "https://github.com/VeritasActa/cedar-agent-schemas"
+Issues = "https://github.com/VeritasActa/cedar-agent-schemas/issues"
+Changelog = "https://github.com/VeritasActa/cedar-agent-schemas/blob/main/CHANGELOG.md"
+
+[tool.hatch.build.targets.wheel]
+packages = ["cedar_agent_schemas"]

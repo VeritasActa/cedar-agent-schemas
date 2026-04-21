@@ -1,0 +1,17 @@
+[package]
+name = "cedar-agent-schemas"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.70"
+description = "Canonical Cedar schema library for agent action verbs (exec, open, connect, request_tool). Rust helpers for constructing Cedar authorization requests."
+homepage = "https://github.com/VeritasActa/cedar-agent-schemas"
+repository = "https://github.com/VeritasActa/cedar-agent-schemas"
+documentation = "https://docs.rs/cedar-agent-schemas"
+readme = "README.md"
+license = "Apache-2.0"
+keywords = ["cedar", "authorization", "agent", "governance", "policy"]
+categories = ["authentication", "cryptography"]
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
